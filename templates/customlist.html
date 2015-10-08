@@ -1,0 +1,9 @@
+﻿#-*- coding: UTF-8 -*-
+<table>
+11张三
+{% for custom in customlist %}
+ 
+  <tr><td>{{custom.custom_name}}</td> <td>{{custom.custom_phone}}</td> <td>{{custom.custom_gender}}</td>  <td>{{custom.custom_adress}},{{custom.updatetime}} </td></tr>
+
+{% endfor %}
+</table>

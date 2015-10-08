@@ -1,0 +1,112 @@
+﻿{% extends "base.html" %}
+{% block title %}订单查看界面{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+	function sendDate(x,datetype,orderid,orderinfo){
+		//改变发货状态 this,发货或者收钱，订单号，订单要提示的信息
+		var confirmsg='ajax初始化失败';
+		if(datetype == 'delivered'){
+			confirmsg=orderinfo+"\n\n确认货已经发完了？";
+		}else if(datetype == 'paidoff'){
+			confirmsg=orderinfo+"\n\n确认钱已经收到了？";
+			}
+		if(confirm(confirmsg)){
+			x.innerHTML="<font color='green' size='18px'><b><em>...</em></b></font>";
+			var sendeddate=datetype+"=Y&orderid="+orderid;
+			var xmlhttp;
+			if (window.XMLHttpRequest){
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			}else{
+				// code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			xmlhttp.onreadystatechange=function(){
+				var i=0;
+				if (xmlhttp.readyState==4 && xmlhttp.status==200){
+					//x改为√
+					x.parentNode.innerHTML="<font color='green' size='18px'><b><em>√</em></b></font>";
+				}
+			}	
+			xmlhttp.open("POST","../orderDisply/changeStatus/",true);
+			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xmlhttp.send(sendeddate);
+			
+		}
+	}
+
+
+</script>
+<input type='button' value='待处理的' onclick="location='../orderlist/?QuerySet=Activity'" style="width:6em;height:40px;float:left;margin:15 5 15 0"/>
+<input type='button' value='未送货的' onclick="location='../orderlist/?QuerySet=undelivered'" style="width:6em;height:40px;float:left;margin:15 5 15 0"/>
+<input type='button' value='未付钱的' onclick="location='../orderlist/?QuerySet=unpaidoff'" style="width:6em;height:40px;float:left;margin:15 5 15 0"/>
+<input type='button' value='所有的' onclick="location='../orderlist/?QuerySet=all'" style="width:6em;height:40px;float:left;margin:15 5 15 0"/>
+</br>	
+	<table border=0 id='recordlist' class="" style="margin:auto;width:100%;border:solid 1px grey;">
+		<tr>
+			<td style="text-align:center;color:white" bgcolor='black'><b>客户姓名</b></td>
+			<!--<td><b>订单号码</b></td>-->
+			<td style="text-align:center;color:white" bgcolor='black'><b>购买日期</b></td>
+			<td style="text-align:center;color:white" bgcolor='black'><b>购买货物</b></td>
+			<td style="text-align:center;color:white" bgcolor='black'><b>订单总价</b></td>
+			<td style="text-align:center;color:white" bgcolor='black'><b>签单人</b></td>
+			<td style="text-align:center;color:white" bgcolor='black'><b>钱已交清</b></td>
+			<td style="text-align:center;color:white" bgcolor='black'><b>是否送货</b></td>
+			<td style="text-align:center;color:white" bgcolor='black'><b>查看详情</b></td>
+		</tr>
+		{% for orders in list %}
+			<tr>
+				<td>{{orders.custom_name}}</td>
+				<!--<td>{{orders.order_id}}</td>-->
+				<td>{{orders.order_bookdate|date:"m月d日"}}</td>
+				<td style="text-align:left;font-size:0.3em">
+
+						{% for item in orders.items %}
+							{{item.name}} ￥{{item.price}} *{{item.number}} </br>
+						{% endfor %}
+
+				</td>
+				<td>{{orders.order_price}}</td>
+				<td>{{orders.owner}}</td>
+				<td>
+					{% if orders.paidoff == "Y" %}
+					<font color='green' size='10em'><b><em>√</em></b></font>
+					{% else %}
+					<div onclick="sendDate(this,'paidoff','{{orders.order_id}}','{{orders.custom_name}}的订单：\n 总价：{{orders.order_price}}\n 还欠：{{orders.debt}}')">
+							<font color='red' size='10em'><b><em>×</em></b></font>
+					</div>
+					{% endif %}
+				</td>
+				
+				<td>
+					{% if orders.delivered == "Y" %}
+					<font color='green' size='10em'><b><em>√</em></b></font>
+					{% else %}
+					<div onclick="sendDate(this,'delivered','{{orders.order_id}}','{{orders.custom_name}}的订单：\n 总价：{{orders.order_price}}\n 还欠：{{orders.debt}}')">
+							<font color='red' size='10em'><b><em>×</em></b></font>
+					</div>
+					{% endif %}
+				</td>
+				
+				<td>
+					<input type='button' value='打开订单' onclick="location='../orderDisply/?orderId={{orders.order_id}}'"/>
+					<!-- post 方式提交数据
+						<form action='../orderDisply/' method='post'><input type='hidden' name='orderId' value='{{orders.order_id}}'><input type='submit' value='查看订单详情'/></form>
+					-->
+				</td>
+				
+			</tr>
+		{% endfor %}
+	</table>
+
+<script>
+	$(document).ready(function() {
+		$("tr:odd").addClass("odd");
+		$("tr:even").addClass("even");
+	});
+</script> 
+
+{% endblock %}
+

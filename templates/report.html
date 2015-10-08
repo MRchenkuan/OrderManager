@@ -1,0 +1,70 @@
+﻿{% extends "base.html" %}
+{% block title %}报表{% endblock %}
+{% block content %}
+	<div id="report">
+		<table id= 'month' style="margin:auto;width:100%;border:solid 1px grey;">
+			<tr><td colspan=3 style="text-align:center;color:white" bgcolor='black'>按月求和</td></tr>
+			<tr><td>月份</td><td>订单量</td><td>总价格(元)</td></tr>
+			{%for monthsum in list.monthsum%}
+			<tr>
+				{%for eachitem in monthsum%}
+					{%if  forloop.counter == 1 %}
+						<td>{{eachitem}}</td>
+					{%endif%}
+					
+					{%if  forloop.counter == 2 %}
+						{%for countAPrice in eachitem%}
+							<td>{{countAPrice}}</td>
+						{%endfor%}						
+					{%endif%}
+				{%endfor%}	
+			</tr>
+			{%endfor%}	
+		</table>
+		
+		<table id= 'all' style="margin:5 0 5 0;width:100%;border:solid 1px grey;">
+			<tr>
+			<td style="text-align:center;color:white" bgcolor='grey' >汇总</td>
+			<td style="text-align:center;color:white" bgcolor='grey' >订单量</td>
+			<td style="text-align:center;color:white" bgcolor='grey' >总价格(元)</td></tr>
+				<tr>
+					<td><b>区间汇总：</b></td>
+					{%for eachitem in list.totlesumAll%}
+						<td><b>{{eachitem}}</b></td>
+					{%endfor%}
+				</tr>
+		</table>
+		
+		<table id= 'day' style="margin:auto;width:100%;border:solid 1px grey;">	
+			<tr><td colspan=3 style="text-align:center;color:white" bgcolor='grey'>按天求和</td></tr>		
+			<tr><td>日期</td><td>订单量</td><td>总价格(元)</td></tr>
+			{%for eachdaysum in list.daysum%}
+			<tr>
+				{%for eachitem in eachdaysum%}
+					{%if  forloop.counter == 1 %}
+						<td>{{eachitem}}</td>
+					{%endif%}
+					
+					{%if  forloop.counter == 2 %}
+						{%for countAPrice in eachitem%}
+							<td>{{countAPrice}}</td>
+						{%endfor%}						
+					{%endif%}
+				
+				{%endfor%}	
+			</tr>
+			{%endfor%}			
+		</table>
+		
+		
+	</div>
+	<script>
+	$(document).ready(function() {
+		$("tr:odd").addClass("odd");
+		$("tr:even").addClass("even");
+	});
+	</script> 
+{% endblock %}
+
+
+

@@ -1,0 +1,109 @@
+﻿{% extends "base.html" %}
+{% block title %}订单录入界面{% endblock %}
+{% block content %}
+
+<script type="text/javascript">
+			var c = new Calendar("c");
+			document.write(c);
+			</script>
+
+<style type="text/css">
+		input{
+			width:150px;
+		}
+</style>
+
+	<form id="record" action="./Submit" method="POST" onsubmit="if(confirm('确认提交此条订单？')){return submitForm()}else{return false;}" >
+		<div id="ordertable" style="font-size:1em;width:100%;border:solid 1px grey;">
+			<table style="margin:5 0 5 0;width:100%;border:solid 1px grey;">
+				<tr><td style="text-align:center;color:white" bgcolor='black' colspan=2><b>>>基本信息<<</b></td></tr>
+				<tr>
+					<td style="text-align:center;color:white" bgcolor='grey'>顾客姓名</td>
+					<td style="text-align:center;color:white" bgcolor='grey'>联系电话</td>
+				</tr>
+				<tr>		
+					<td><input type='text' name='cust_name' style="font-size:1em"/></td>
+					<td><input type='number' name='phone' id='phone' onpropertychange="replaceNotNumber(this)" oninput="replaceNotNumber(this)" onkeyup="lengthLimite(this,11);checkcustomer(this.value)"/></td>
+				</tr>
+				<tr>	
+					
+					
+					<!--<select name='gender'>
+							<option value ="D">未知</option>
+							<option value ="M">男</option>
+							<option value ="F">女</option>
+						</select>
+					-->
+					
+				</tr>
+				<!-- 用户备注信息
+				<tr>
+					<td>备注</td>
+					<td><input type='text' name='comment' value='无'></td>
+				</tr>
+				-->
+				<tr>
+					<td style="text-align:center;color:white" bgcolor='grey'>订单地址</td>
+					<td style="text-align:center;color:white" bgcolor='grey'>订单归属</td>
+				</tr>		
+				<tr>
+					<td><input type='text' name='address' id='address'></td>
+					<td>{% include "orderOwnerlist.html" %}</td>
+				</tr>
+				<tr>
+					<td style="text-align:center;color:white" bgcolor='grey'>订货日期</td>
+					<td style="text-align:center;color:white" bgcolor='grey'>交货日期</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="bookdate" id="bookdate" onfocus="this.value=document.getElementById('deliverydate').value;new Calendar().show(this);" readonly="readonly"/></td>		
+					<td><input type="text" name="deliverydate" id="deliverydate" onfocus="this.value=document.getElementById('bookdate').value;new Calendar().show(this);" readonly="readonly"/></td>
+				</tr>
+			</table>
+			<table style="margin:5 0 5 0;width:100%;border:solid 1px grey;">
+				<tr><td style="text-align:center;color:white" colspan=4 bgcolor='black'><b>>>货物明细<<</b></td></tr>
+				<tr>
+					<td style="width:40%;text-align:center;color:white" bgcolor='grey'>商品名</td>
+					<td style="width:20%;text-align:center;color:white" bgcolor='grey'>单价</td>
+					<td style="width:20%;text-align:center;color:white" bgcolor='grey'>数量</td>
+					<td style="width:20%;text-align:center;color:white" bgcolor='grey'>操作</td>
+				</tr>
+				<tr>
+					<input type='hidden' name='ItemDetailSign'>
+					<td><input type='text' name='itemname'></td>
+					<!--<td>
+						{% include "itemtypelist.html" %}
+					</td>-->
+					<td><input type='number' name='itemprice' onpropertychange="replaceNotNumber(this)" oninput="replaceNotNumber(this)" onkeyup="lengthLimite(this,6)" /></td>
+					<td>
+					<input style="width: 20%;color: white;background-color:rgba(127, 32, 22, 0.51) " type="button" value="-" onclick="var number = this.parentNode.childNodes[3];if(number.value>1){number.value--};">
+                    <input style="width: 50%;" type="text" name="number" value="1" >
+                    <input style="width: 20%;color: white;background-color:rgba(24, 202, 28, 0.42) " type="button" value="+" onclick="this.parentNode.childNodes[3].value++">
+					</td>
+					<td>
+						<input type="button" onclick="addtr(this)" value="复制" style="float:left;background-color:rgba(24, 202, 28, 0.42);color: white;margin: 1px;text-align:center;font-size:1em;width:47%;border:solid 1px #6a6da9">
+						<input type="button" onclick="deltr(this)" value="删除" style="float:left;background-color:rgba(127, 32, 22, 0.51);color: white;margin: 1px;text-align:center;font-size:1em;width:47%;border:solid 1px #6a6da9">
+					</td>
+				</tr>
+			</table>
+			<table style="margin:5 0 5 0;width:100%;border:solid 1px grey;">
+				<tr><td style="text-align:center;color:white" colspan=3 bgcolor='black'>结账信息</td></tr>
+				<tr>
+					<td style="text-align:center;color:white" bgcolor='grey'>总价</td>
+					<td style="text-align:center;color:white" bgcolor='grey'>已付</td>
+					<td style="text-align:center;color:white" bgcolor='grey'>欠款</td>
+				</tr>
+				<tr>
+					<td><input type='number' name='sum' id='sum' onpropertychange="replaceNotNumber(this)" oninput="replaceNotNumber(this)"  onkeyup="lengthLimite(this,6);checkPrice()"/></td>
+					<td><input type='number' name='paid' id='paid' onpropertychange="replaceNotNumber(this)" oninput="replaceNotNumber(this)"  onkeyup="lengthLimite(this,6);checkPrice()"/></td>
+					<td><input type='number' name='debt' id='debt' onpropertychange="replaceNotNumber(this)" oninput="replaceNotNumber(this)"  onkeyup="lengthLimite(this,6);checkPrice()"/></td>
+				</tr>
+				<tr>
+					
+				</tr>
+			</table>
+			<div id="submit" style="margin:55px 0 5px 0" >
+					<input type='submit' value ='提交' style="width:30%; text-align:center;height:50px" />
+			</div>
+		</div>		
+	</form>
+{% endblock %}

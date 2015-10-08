@@ -1,0 +1,5 @@
+<select name='orderOwner'>
+	{% for owner in Dict.owners %}
+	<option value ="{{owner.owner_code}}">{{owner.owner_name}}</option>
+	{% endfor %}
+</select>

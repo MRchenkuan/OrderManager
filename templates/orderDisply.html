@@ -1,0 +1,187 @@
+﻿{% extends "base.html" %}
+{% block title %}订单明细{% endblock %}
+{% block content %}
+<script>
+//改变发货状态
+function sendgoods(x){
+	if(confirm("确认货已经发完了？")){
+		var xmlhttp;
+		if (window.XMLHttpRequest){
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}else{
+			// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}		
+		xmlhttp.onreadystatechange=function(){
+			var i=0;
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				x.value="货已发送";
+				x.disabled="disabled";
+				location.reload();
+			}else{
+				i++;
+				if(i<=4){
+				x.disabled="disabled";
+				x.value="送货中请稍等..."
+				}else{
+					x.value="发送失败，请重试"
+					xremoveAttribute("disabled");
+				}
+			}
+		}	
+		xmlhttp.open("POST","./changeStatus/",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send("delivered=Y&orderid={{order.order_id}}");
+		//location.reload();
+		}
+}
+	
+	
+//改变付钱状态
+function getmoney(x){
+	if(confirm("确认钱已经收到了？")){
+		var xmlhttp;
+		if (window.XMLHttpRequest){
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}else{
+			// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function(){
+			var i=0;
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				x.value="钱已收到";
+				x.disabled="disabled";
+				location.reload();
+			}else{
+				i++;
+				if(i<=4){
+				x.disabled="disabled";
+				x.value="收钱中请稍等..."
+				}else{
+					x.value="收钱失败，请重收"
+					xremoveAttribute("disabled");
+				}
+			}
+		}
+		xmlhttp.open("POST","./changeStatus/",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send("paidoff=Y&orderid={{order.order_id}}");
+		//
+	}
+}
+</script>
+
+	<table id="orderPreview">
+		<tr>
+			<td><b>订单编号：</b>{{order.order_id}}</td>
+		</tr>
+		<tr>
+			<td><b>订单状态：</b>
+					{% if order.paidoff == "Y" %}
+					<font color='green'><b>钱已付清</b></font>
+					{% else %}
+					<font color='red'><b>货款未付清</b></font>
+					{% endif %}
+					
+					{% if order.paidoff == order.delivered %}
+					<b>并且</b>
+					{%else%}
+					<b>但是</b>
+					{%endif%}
+					
+					{% if order.delivered == "Y" %}
+					<font color='green'><b>货已送完</b></font>
+					{% else %}
+					<font color='red'><b>缺货未送</b></font>
+					{% endif %}
+			</td>
+		</tr>
+		<tr>
+			<td><b>顾客姓名：</b>{{order.custom_name}}</td>
+		</tr>
+		<tr>
+			<td><b>送货地址：</b>{{order.order_addr}}</td>
+		</tr>
+		<tr>
+			<td><b>联系电话：</b>{{order.custom_phone}}</td>
+		</tr>
+		<tr>
+			<td>
+				<hr>
+			</td>
+		</tr>
+		<tr>
+			<td><b>订货日期：</b>{{order.order_bookdate|date:"Y年m月d日"}}</td>
+		</tr>
+		<tr>
+			<td><b>送货日期：</b>{{order.order_deliveredate|date:"Y年m月d日"}}</td>
+		</tr>	
+		<tr>
+			<td>
+				<hr>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<ul>
+				{% for item in order.items %}
+					<li>{{item.name}} ￥{{item.price}}*{{item.number}} 小计：{{item.sumprice}}元</li>
+				{% endfor %}
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<hr>
+			</td>
+		</tr>
+		<tr>
+			<td><font color="red"><b>订单结算价：{{order.totlePrice}} 元</b></font></td>
+		</tr>
+		<tr>
+			<td>
+				<font color="green">
+					<b>
+						{% if order.paidoff == "Y" %}
+						优惠后价格：{{order.final_price}} 元（已付：{{order.final_price}} 元；<font color="red">还欠：0 元</font>）
+						{%else%}
+						优惠后价格：{{order.final_price}} 元（已付：{{order.paid}} 元；<font color="red">还欠：{{order.debt}} 元</font>）
+						{%endif%}
+					</b>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<hr>
+			</td>
+		</tr>
+		<tr>
+			<td><font color="grey"><b>签单人：{{order.owner}}</b></font></td>
+		</tr>
+		<tr>
+			<td>
+				{% if order.delivered == "Y" %}
+				<input type='button' id='delivered' value='货已发送' disabled="disabled" style="width:45%; text-align:center;height:30px"/>
+				{%else%}
+				<input type='button' id='delivered' value='完成送货' onclick='sendgoods(this)' style="width:45%; text-align:center;height:30px"/>
+				{%endif%}
+				
+				{% if order.paidoff == "Y" %}
+				<input type='button' id='paidoff' value='钱已收到' disabled="disabled" style="width:45%; text-align:center;height:30px" />
+				{%else%}
+				<input type='button' id='paidoff' value='完成收钱' onclick='getmoney(this)' style="width:45%; text-align:center;height:30px"/>
+				{%endif%}
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<input type='button' value='打印' style="width:98%; text-align:center;height:30px" onclick='javascript:window.print()'/>
+			</td>
+		</tr>
+	</table>
+
+{% endblock %}

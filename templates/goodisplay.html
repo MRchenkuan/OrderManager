@@ -1,0 +1,26 @@
+{% extends "deployBase.html" %}
+{% block goodscontent %}
+    <span style="width: 100%;float: left;text-align: left;margin-top: 2em">
+        {{ goodinfo.name }}
+    </span>
+    <div style="float: left;width: 100%;">
+        <table id="standard">
+            <tr>
+                <td>产地</td>
+                <td>{{ goodinfo.standard }}</td>
+                <td></td>
+                <td>库存号</td>
+                <td>
+                    {% for goodstrage in goodstorages %}
+                    {{ goodstrage.storage }}、
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="float: left;width: 100%;">
+        {% for goodimg in goodimgs %}
+            <img style="float: left;width: 95%;margin:0.5em 0.5em 0.5em 0.5em;border:solid grey 1px" src="{{ goodimg.goodUrl }}{{ goodimg.name }}" alt="{{ goodinfo.name }}"><br>
+        {% endfor %}
+    </div>
+{% endblock %}

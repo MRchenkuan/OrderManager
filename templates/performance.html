@@ -1,0 +1,45 @@
+﻿{% extends "base.html" %}
+{% block title %}工作业绩{% endblock %}
+{% block content %}
+	<table style="margin:auto;width:100%;border:solid 1px grey;">
+		<tr><td colspan=4 style="text-align:center;color:white;margin:5 0 5 0" bgcolor='black'>合计</td></tr>
+		<tr><td>姓名</td><td>业绩</td><td>奖率</td><td>奖金</td></tr>
+		
+		{%for employee  in monthDic %}
+		<tr>		
+		<td>{{employee.name}}</td>
+		<td>{{employee.revenue}}元</td>
+		<td>{{employee.perRate}}</td>
+		<td>{{employee.bonus|floatformat:0}}元</td>
+		</tr>
+		{%endfor%}
+		
+	</table>
+	
+	<table style="margin:auto;width:100%;border:solid 1px grey;">
+		<tr><td colspan=4 style="text-align:center;color:white;margin:5 0 5 0" bgcolor='black'>一月</td></tr>
+		<tr><td>姓名</td><td>奖率</td><td>奖金</td></tr>
+		<tr><td>{{val}}</td><td>一月</td><td>一月</td></tr>
+		<tr><td>一月</td><td>一月</td><td>一月</td></tr>
+		<tr><td>一月</td><td>一月</td><td>一月</td></tr>
+		<tr><td>一月</td><td>一月</td><td>一月</td></tr>		
+	</table>
+	
+	<table style="margin:auto;width:100%;border:solid 1px grey;">
+		<tr><td colspan=4 style="text-align:center;color:white;margin:5 0 5 0" bgcolor='black'>一月</td></tr>
+		<tr><td>姓名</td><td>奖率</td><td>奖金</td></tr>
+		<tr><td>一月</td><td>一月</td><td>一月</td></tr>
+		<tr><td>一月</td><td>一月</td><td>一月</td></tr>
+		<tr><td>一月</td><td>一月</td><td>一月</td></tr>
+		<tr><td>一月</td><td>一月</td><td>一月</td></tr>		
+	</table>
+	
+		<script>
+	$(document).ready(function() {
+		$("tr:odd").addClass("odd");
+		$("tr:even").addClass("even");
+	});
+	</script> 
+{% endblock %}
+
+

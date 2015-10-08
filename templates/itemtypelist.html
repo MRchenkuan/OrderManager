@@ -1,0 +1,5 @@
+<select name='itemtype'>
+	{% for items in Dict.itemtpyelist %}
+	<option value ="{{items.tpye_code}}">{{items.tpye_name}}</option>
+	{% endfor %}
+</select>

@@ -1,0 +1,35 @@
+﻿html{
+	font-family:Arial,Helvetica,sans-serif,"宋体";font: normal 100% Helvetica, Arial, sans-serif;}
+table input,select{
+	font-size:1em;
+	width:98%;
+	height:3em;
+	border:solid 1px grey;
+	margin:2px;
+	background:#d1c7b7
+	}
+input[type='submit']{
+    width: 25%;
+    height: 3em;
+}
+table{font-family:"微软雅黑";}
+img { max-width: 100%;}
+/*奇偶交替颜色*/
+#recordlist tr:hover{
+background-color:#f2eada; 
+}
+#recordlist tr:hover{
+background-color:#f2eada; 
+}
+
+.odd{
+background-color:#cde6c7;
+}
+
+.even{
+background-color:#d3d7d4;
+} 
+
+#orderPreview {
+	text-align:left;
+}

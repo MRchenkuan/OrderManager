@@ -1,0 +1,89 @@
+{% extends "deployBase.html" %}
+{% block goodscontent %}
+    <style>
+        .titlespan{
+            width: 80%;
+            margin: 1em;
+            text-align: left;
+            font-size: 1em;
+            float: left;
+            font-weight: 900;
+            font-size: 1.5em;
+        }
+
+    </style>
+    <span class="titlespan">沙发</span><br>
+    {% for goodobject in sofalist %}
+        <div class="goods">
+            <a href="/goodDisplay/?goodid={{ goodobject.goodid }}"><img style="float: left" src="{{ goodobject.GOODIMGURLS|first }}"><hr></a><br>
+            <span style="float: left"><b>{{ goodobject.GOODNAME }}</b></span><span style="color: grey;float: right">余量：{{ goodobject.GOODCOUNT }} 件</span><hr><hr><br>
+            <div style="float: left;font-size:0.75em;color:grey;width: 100%">
+                <span style="float: left;">产地:{{ goodobject.GOODSTD}} </span>
+                <span style="float: right;">生产年份:{{ goodobject.GOODSTD}} </span>
+                <span style="clear: both;">尺寸:{{ goodobject.GOODSTD}} </span>
+            </div>
+            <!--producteddate,size,color,madeof,notice-->
+        </div>
+    {% endfor %}
+    <hr>
+
+    <span class="titlespan">床&床垫</span>
+    {% for goodobject in bedlist %}
+        <div class="goods">
+            <a href="/goodDisplay/?goodid={{ goodobject.goodid }}"><img style="float: left" src="{{ goodobject.GOODIMGURLS|first }}"><hr></a><br>
+            <span style="float: left"><b>{{ goodobject.GOODNAME }}</b></span><span style="color: grey;float: right">余量：{{ goodobject.GOODCOUNT }}件</span><hr><hr><br>
+            <div style="float: left;font-size:0.75em;color:grey;width: 100%">
+                <span style="float: left;">产地:{{ goodobject.GOODSTD}} </span>
+                <span style="float: right;">生产年份:{{ goodobject.GOODSTD}} </span>
+                <span style="clear: both;">尺寸:{{ goodobject.GOODSTD}} </span>
+            </div>
+            <!--producteddate,size,color,madeof,notice-->
+        </div>
+    {% endfor %}
+    <hr>
+
+    <span class="titlespan">桌椅</span>
+    {% for goodobject in desklist %}
+        <div class="goods">
+            <a href="/goodDisplay/?goodid={{ goodobject.goodid }}"><img style="float: left" src="{{ goodobject.GOODIMGURLS|first }}"><hr></a><br>
+            <span style="float: left"><b>{{ goodobject.GOODNAME }}</b></span><span style="color: grey;float: right">余量：{{ goodobject.GOODCOUNT }} 件</span><hr><hr><br>
+            <div style="float: left;font-size:0.75em;color:grey;width: 100%">
+                <span style="float: left;">产地:{{ goodobject.GOODSTD}} </span>
+                <span style="float: right;">生产年份:{{ goodobject.GOODSTD}} </span>
+                <span style="clear: both;">尺寸:{{ goodobject.GOODSTD}} </span>
+            </div>
+            <!--producteddate,size,color,madeof,notice-->
+        </div>
+    {% endfor %}
+    <hr>
+
+    <span class="titlespan">套房</span>
+    {% for goodobject in taofanglist %}
+        <div class="goods">
+            <a href="/goodDisplay/?goodid={{ goodobject.goodid }}"><img style="float: left" src="{{ goodobject.GOODIMGURLS|first }}"><hr></a><br>
+            <span style="float: left"><b>{{ goodobject.GOODNAME }}</b></span><span style="color: grey;float: right">余量：{{ goodobject.GOODCOUNT }}件</span><hr><hr><br>
+            <div style="float: left;font-size:0.75em;color:grey;width: 100%">
+                <span style="float: left;">产地:{{ goodobject.GOODSTD}} </span>
+                <span style="float: right;">生产年份:{{ goodobject.GOODSTD}} </span>
+                <span style="clear: both;">尺寸:{{ goodobject.GOODSTD}} </span>
+            </div>
+            <!--producteddate,size,color,madeof,notice-->
+        </div>
+    {% endfor %}
+    <hr>
+
+    <span class="titlespan">其他</span>
+    {% for goodobject in other %}
+        <div class="goods">
+            <a href="/goodDisplay/?goodid={{ goodobject.goodid }}"><img style="float: left" src="{{ goodobject.GOODIMGURLS|first }}"><hr></a><br>
+            <span style="float: left"><b>{{ goodobject.GOODNAME }}</b></span><span style="color: grey;float: right">余量：{{ goodobject.GOODCOUNT }}</span><hr><hr><br>
+            <div style="float: left;font-size:0.75em;color:grey;width: 100%">
+                <span style="float: left;">产地:{{ goodobject.GOODSTD}} </span>
+                <span style="float: right;">生产年份:{{ goodobject.GOODSTD}} </span>
+                <span style="clear: both;">尺寸:{{ goodobject.GOODSTD}} </span>
+            </div>
+            <!--producteddate,size,color,madeof,notice-->
+        </div>
+    {% endfor %}
+    <hr>
+{% endblock %}

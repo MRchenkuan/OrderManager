@@ -1,0 +1,33 @@
+﻿{% extends "base.html" %}
+{% block title %}留言板{% endblock %}
+{% block content %}
+	<div id="msgpView">
+		<table id='msgtable' style="text-align:left;width:100%;border:solid 1px grey;">
+			<tr>
+				<td style="text-align:center;color:white" bgcolor='black'><b>留言内容</b></td>
+				<td style="text-align:center;color:white" bgcolor='black'><b>留言时间</b></td>
+				<td style="text-align:center;color:white" bgcolor='black'><b>留言者</b></td>
+			</tr>
+			{% for msg in msgObjs %}
+			<tr>
+				<td style="width:75%;">{{msg.msgcontent|linebreaksbr}}</td>
+				<td>{{msg.msgcreatetime|date:"m-d H:i:s"}}</td>
+				<td>{{msg.msgcreater}}</td>
+			</tr>
+			{% endfor %}	
+		</table>
+	</div>
+	<div id='creatMsg'>
+		<form id='msgSubmit' action='../messageBoard/' method='POST' >
+			留言者姓名：</br><input type='text' id='msgWriteName' name='msgWriteName' style='width:80%;height:2em;border:solid 1px grey;margin:2px;background:#d1c7b7'/></br>
+			留 言 内 容：</br><textarea style='width:80%;height:20em;border:solid 1px grey;margin:2px;background:#d1c7b7' id='content' name='content'></textarea></br>
+			<input type="submit" value="写留言" style="margin:20px ;width:30%; text-align:center;height:50px"/>
+		</form>
+	</div>
+	<script>
+	$(document).ready(function() {
+		$("tr:odd").addClass("odd");
+		$("tr:even").addClass("even");
+	});
+	</script> 
+{% endblock %}

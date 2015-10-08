@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}门店部署{% endblock %}
+{% block content %}
+<style type="text/css">
+    #sidebar{
+        float: left;
+        height: 500px;
+        border:solid #80392d 1px;
+        width: 15%;
+        margin: 5px;
+
+    }
+    #sidebar input{
+            width:80%;
+			height:4em;
+			margin:5px;
+			border:solid 1px Grey;
+    }
+    #goodsbed{
+        float: left;
+        border: solid grey 1px;
+        width:80%;
+        height: auto;
+        margin:5px;
+    }
+    .goods{
+        width:22%;
+        height:AUTO;
+        border:grey solid 1px;
+        margin:10px;
+        float:left;
+    }
+    hr{
+        width:100%;
+    }
+</style>
+    <div id="sidebar"><br>
+        <input type="button" value="新店一楼" onclick="location='/deploy/?shopid=01'"/><br>
+        <input type="button" value="新店二楼" onclick="location='/deploy/?shopid=02'"/><br>
+        <input type="button" value="对面老店一楼" onclick="location='/deploy/?shopid=03'"/><br>
+        <input type="button" value="对面老店二楼" onclick="location='/deploy/?shopid=04'"/><br>
+        <input type="button" value="对面老店三楼" onclick="location='/deploy/?shopid=05'"/><br>
+        <input type="button" value="仓库存货" onclick="location='/deploy/?shopid=06'"/><br>
+    </div>
+    <div id="goodsbed">
+        {% block goodscontent %}
+        <div class="goods">12313123</div>
+        <hr>
+        <div class="goods">12313123</div>
+        <div class="goods">12313123</div>
+        <hr>
+        <div class="goods">12313123</div>
+        <div class="goods">12313123</div>
+        {% endblock %}
+    </div>
+{% endblock %}

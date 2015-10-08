@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+
+{% block nav %}
+{% endblock %}
+
+{% block content %}
+	<style type='text/css'>
+		.nav{
+			width:12%;
+			height:40px;
+			margin:5px;
+			border:solid 1px white;
+			}
+		.content{
+			height:960px;
+			width:100%;
+			padding-top:200px;
+			text-align:center;
+			background-image:url('/images/psb1.jpg');
+			background-position: center center;
+		}
+		.font{
+			font-size:6em;
+			color:black;
+			-webkit-text-stroke: 1px white;
+		}
+	</style>
+	<div id='index' class='content' >
+		<input type='button' value='首页' onclick="location='../'" class='nav'/></br>
+		<input type='button' value='订单录入' onclick="location='../record/'" class='nav'/></br>
+		<input type='button' value='订单浏览' onclick="location='../orderlist/'" class='nav' /></br>
+		<input type='button' value='报表分析' onclick="location='../report/'" class='nav' /></br>
+		<input type='button' value='工作业绩' onclick="location='../performance/'" class='nav' /></br>
+		<input type='button' value='留言板' onclick="location='../messageBoard/'" class='nav' /></br>
+		<!--<input type='button' value='顾客分布' onclick="location='../custlocation/'" />-->
+		<input type='button' value='同步中心' onclick="location='../pricedetermination/'" class='nav' /></br>
+		<input type='button' value='存货状态' onclick="location='../deploy/'" class='nav' /></br>
+		<input type='button' value='货物部署' onclick="location='../upload/'" class='nav' /></br>
+		<!--<input type='button' value='个人简历' onclick="location='../resume/'" class='nav' /></br>-->
+		<b>
+			<font class='font' >HELLO WORLD!</font>
+		</b>
+
+	</div>
+			
+{% endblock %}
+
+{% block foot %}
+{% endblock %}

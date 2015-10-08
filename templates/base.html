@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<script src="/js/jquery.js"></script>
+		<link href="/css/style.css" rel="stylesheet" type="text/css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="/js/calendar.js" type="text/javascript"></script>
+		<script src="/js/method1.js" type="text/javascript"></script>
+        this.value=document.getElementById('deliverydate').value;new Calendar().show(this);
+		<link rel="shortcut icon" href="/images/changhong-logo.ico" type="image/x-icon" />
+	</head>	
+	<title>{% block title %}首页{% endblock %}</title>
+	<body style=" text-align:center; margin:0;width:100%;height: auto">
+		
+		{% block nav%}
+		<div id='navArea' style="height:80px;width:100%;border:solid 1px grey;text-align:center;margin-bottom:2px;">
+			<div id='navList'style="margin-top:20px;text-align:left;">
+				<input type='button' value='首页' onclick="location='../'" style="width:12%;border: solid grey 1px;"/>
+				<input type='button' value='订单录入' onclick="location='../record/'" style="width:12%;border: solid grey 1px;"/>
+				<input type='button' value='订单浏览' onclick="location='../orderlist/'" style="width:12%;border: solid grey 1px;"/>
+				<input type='button' value='报表分析' onclick="location='../report/'" style="width:12%;border: solid grey 1px;"/>
+				<input type='button' value='工作业绩' onclick="location='../performance/'" style="width:12%;border: solid grey 1px;"/>
+				<input type='button' value='留言板' onclick="location='../messageBoard/'" style="width:12%;border: solid #807f7c 1px;"/>
+				<!--<input type='button' value='顾客分布' onclick="location='../custlocation/'" style="width:12%;height:40px"/>-->
+				<input type='button' value='同步中心' onclick="location='../pricedetermination/'" style="width:12%;border: solid grey 1px;"/>
+				<input type='button' value='存货状态' onclick="location='../deploy/'" style="width:12%;border: solid grey 1px;"/>
+				<input type='button' value='货物部署' onclick="location='../upload/'" style="width:12%;border: solid grey 1px;"/>
+				<!--<input type='button' value='个人简历' onclick="location='../resume/'" style="width:12%;height:40px"/>	-->
+			</div>
+		</div>
+		{% endblock %}
+		
+		<div id='contentArea'>
+			{% block content %}
+				
+			{% endblock %}
+		</div>
+		
+		{% block foot%}
+		<div id='footerArea' style="float: left;height:50px;width:100%;border:solid 1px grey;text-align:center;margin-top:2px;">
+		<div style="margin:15px">Copyright@Adol.com™D Dev.ver</div>
+		</div>
+		{% endblock %}
+	</body>
+</html>

@@ -1,0 +1,71 @@
+﻿{% extends "base.html" %}
+{% block title %}价格同步{% endblock %}
+{% block content %}
+<script type="text/javascript">
+	function sendDate(id){
+		var fullname=document.getElementById(id).fullname.value;
+		var itemid=document.getElementById(id).id.value;
+		var name=document.getElementById(id).name.value;
+		var standard=document.getElementById(id).standard.value;
+		var price=document.getElementById(id).price.value;
+		var sendeddate='fullname='+fullname+'&id='+itemid+'&name='+name+'&standard='+standard+'&price='+price;
+
+		
+		msg='确认标价：\n\n'+fullname+'\n'+price+'元？\n'
+		if(confirm(msg)){	
+			var xmlhttp;
+			if (window.XMLHttpRequest){
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			}else{
+				// code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			xmlhttp.onreadystatechange=function(){
+				if (xmlhttp.readyState==4 && xmlhttp.status==200){
+					location.reload();
+					alert('完成标价');
+				}else{
+				}
+			}
+			
+			xmlhttp.open("POST","../standardization/",true);
+			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xmlhttp.send(sendeddate);
+			
+		}
+	}
+
+</script>
+
+<b>总数：{{count}} 条</b>
+<table>
+<tr>
+	<td  style="text-align:center;color:white" bgcolor='black'>名称</td>
+	<td  style="text-align:center;color:white" bgcolor='black'>规格</td>
+	<td  style="text-align:center;color:white" bgcolor='black'>价格</td>
+	<td  style="text-align:center;color:white" bgcolor='black'>操作</td>
+</tr>
+{%for detail in itemlist%}
+	<tr>
+		<form id='{{detail.id}}' action='./standardization' method='post'>
+			<input type='hidden' name='fullname' value='{{detail.fullname}}' />
+			<td>{{detail.name}}</td>
+			<td>{{detail.standard}}</td>
+			<input type='hidden' name='id' value='{{detail.id}}' />
+			<input type='hidden' name='name' value='{{detail.name}}' readonly />
+			<input type='hidden' name='standard' value='{{detail.standard}}' readonly />
+			<td><input type='number' name='price' value='{{detail.price}}' /></td>	
+			<td><input type='button' value='确认' onclick="sendDate('{{detail.id}}')"/></td>
+		</form>
+	</tr>
+{%endfor%}
+</table>
+<script>
+	$(document).ready(function() {
+		$("tr:odd").addClass("odd");
+		$("tr:even").addClass("even");
+	});
+</script> 
+{% endblock%}
